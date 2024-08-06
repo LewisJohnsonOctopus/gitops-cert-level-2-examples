@@ -3,20 +3,20 @@ apiVersion: batch/v1
 kind: Job
 metadata:
   namespace: example06
-  generateName: enable-alerts-
+  generateName: grafana-notify-
   labels:
-    codefresh.io/cert: enable-job  
+    codefresh.io/cert: grafana-job  
   annotations:
-    argocd.argoproj.io/hook: PostSync
-    argocd.argoproj.io/sync-wave: "30" 
+    argocd.argoproj.io/hook: Sync
+    argocd.argoproj.io/sync-wave: "-10" 
 spec:
   template:
     spec:
       containers:
-      - name: dummy-message
+      - name: dummy-run
         image: alpine
         command:
           - "sleep"
-          - "3"
+          - "10"
       restartPolicy: Never
   backoffLimit: 2    
