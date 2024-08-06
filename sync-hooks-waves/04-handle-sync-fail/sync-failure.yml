@@ -4,7 +4,7 @@ metadata:
   namespace: example04
   generateName: dummy-sync-fail-
   annotations:
-    #argocd.argoproj.io/hook: Sync
+    argocd.argoproj.io/hook: Sync
 spec:
   template:
     spec:
