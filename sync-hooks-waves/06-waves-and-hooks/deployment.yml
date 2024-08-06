@@ -1,22 +1,23 @@
 
----
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: batch/v1
+kind: Job
 metadata:
-  name: simple-deployment
   namespace: example06
+  generateName: disable-alerts-
+  labels:
+    codefresh.io/cert: disable-job  
+  annotations:
+    argocd.argoproj.io/hook: PreSync
+    argocd.argoproj.io/sync-wave: "20" 
 spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: trivial-go-web-app
   template:
-    metadata:
-      labels:
-        app: trivial-go-web-app
     spec:
       containers:
-      - name: webserver-simple
-        image: docker.io/kostiscodefresh/gitops-simple-app:v1.0
-        ports:
-        - containerPort: 8080
+      - name: dummy-run
+        image: alpine
+        command:
+          - "sleep"
+          - "10"
+      restartPolicy: Never
+  backoffLimit: 2    
+
